@@ -1,0 +1,55 @@
+{
+  "name": "ttisland",
+  "version": "0.12.0",
+  "description": "TTIsland desktop companion",
+  "main": "main.cjs",
+  "author": "TTIsland",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "^42.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "local.island.lab",
+    "productName": "TTIsland",
+    "files": [
+      "index.html",
+      "main.cjs",
+      "preload.cjs",
+      "music-adapter.js",
+      "music-controller.cjs",
+      "music-preload.cjs",
+      "recording.cjs",
+      "assets/**",
+      "desktop-tools.cjs",
+      "extras.js",
+      "native/**",
+      "plus.js",
+      "plus.css",
+      "provider-controller.cjs",
+      "generic-player.js",
+      "voice.cjs",
+      "LICENSE",
+      "THIRD-PARTY-NOTICES.md",
+      "contour.js",
+      "window-controls.js",
+      "window-shell.cjs"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/island.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/island.ico",
+      "uninstallerIcon": "assets/island.ico",
+      "installerHeaderIcon": "assets/island.ico",
+      "shortcutName": "TTIsland"
+    }
+  }
+}

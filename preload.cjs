@@ -1,0 +1,16 @@
+const {contextBridge,ipcRenderer}=require('electron');
+contextBridge.exposeInMainWorld('islandAPI',Object.freeze({
+ hideWindow:()=>ipcRenderer.invoke('window-hide'),dragWindow:phase=>ipcRenderer.invoke('window-drag',phase),windowShellInfo:()=>ipcRenderer.invoke('window-shell-info'),onWindowHidden:fn=>ipcRenderer.on('window-hidden',()=>fn()),onWindowShow:fn=>ipcRenderer.on('window-show',()=>fn()),
+ windowLayout:request=>ipcRenderer.invoke('window-layout',request),musicProvider:id=>ipcRenderer.invoke('music-provider',id),voiceArm:()=>ipcRenderer.invoke('voice-arm'),voiceEnd:()=>ipcRenderer.invoke('voice-end'),voiceInfo:()=>ipcRenderer.invoke('voice-info'),voiceTranscribe:request=>ipcRenderer.invoke('voice-transcribe',request),voiceImport:language=>ipcRenderer.invoke('voice-import',language),voiceSave:bytes=>ipcRenderer.invoke('voice-save',bytes),voiceForget:()=>ipcRenderer.invoke('voice-forget'),
+ deviceDiagnostics:()=>ipcRenderer.invoke('desktop-diagnostics'),desktopTools:(task,payload)=>ipcRenderer.invoke('desktop-tools',task,payload),ocrImage:request=>ipcRenderer.invoke('ocr-image',request),visualArm:()=>ipcRenderer.invoke('visual-arm'),visualEnd:()=>ipcRenderer.invoke('visual-end'),
+ serviceVisible:value=>ipcRenderer.invoke('service-visible',value),selectService:id=>ipcRenderer.invoke('service-select',id),serviceBounds:r=>ipcRenderer.invoke('service-bounds',r),reloadService:()=>ipcRenderer.invoke('service-reload'),externalService:()=>ipcRenderer.invoke('service-external'),removeLegacyKey:()=>ipcRenderer.invoke('remove-legacy-key'),musicAction:a=>ipcRenderer.invoke('music-action',a),musicToggle:()=>ipcRenderer.invoke('music-toggle'),onMusic:fn=>ipcRenderer.on('music-state',(_,s)=>fn(s)),onServiceState:fn=>ipcRenderer.on('service-state',(_,s)=>fn(s)),onServiceCollapse:fn=>ipcRenderer.on('service-collapse',()=>fn()),
+ musicSeek:request=>ipcRenderer.invoke('music-seek',request),musicVolume:value=>ipcRenderer.invoke('music-volume',value),
+ recordSources:()=>ipcRenderer.invoke('record-sources'),recordArm:opts=>ipcRenderer.invoke('record-arm',opts),recordChunk:data=>ipcRenderer.invoke('record-chunk',data),recordFinish:discard=>ipcRenderer.invoke('record-finish',discard),onRecordStop:fn=>ipcRenderer.on('record-stop-request',()=>fn()),musicDiagnostics:()=>ipcRenderer.invoke('music-diagnostics'),
+ hoverBounds:r=>ipcRenderer.invoke('hover-bounds',r),onPointerPresence:fn=>ipcRenderer.on('pointer-presence',(_,inside)=>fn(inside)),
+ prepareCollapse:()=>ipcRenderer.invoke('prepare-collapse'),resize:small=>ipcRenderer.invoke('resize',small),pin:v=>ipcRenderer.invoke('pin',v),copyText:t=>ipcRenderer.invoke('copy-text',t),
+ getHistory:()=>ipcRenderer.invoke('history'),clearHistory:()=>ipcRenderer.invoke('clear-history'),
+ clipboardEnabled:v=>ipcRenderer.invoke('clip-enabled',v),getClipboardEnabled:()=>ipcRenderer.invoke('get-clip-enabled'),
+ stats:()=>ipcRenderer.invoke('stats'),openSettings:t=>ipcRenderer.invoke('settings',t),capture:()=>ipcRenderer.invoke('capture'),
+ copyImage:d=>ipcRenderer.invoke('copy-image',d),saveImage:d=>ipcRenderer.invoke('save-image',d),notify:(t,b)=>ipcRenderer.invoke('notify',t,b),quit:()=>ipcRenderer.invoke('quit'),
+ onToggle:fn=>ipcRenderer.on('toggle',()=>fn()),onClipboard:fn=>ipcRenderer.on('clipboard',(_,text)=>fn(text))
+}));

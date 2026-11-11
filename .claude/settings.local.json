@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unzip -q TTIsland-0.12.zip)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}
