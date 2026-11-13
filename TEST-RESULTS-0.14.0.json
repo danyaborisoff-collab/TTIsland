@@ -1,0 +1,51 @@
+{
+  "version": "0.14.0",
+  "environment": "Linux + Chromium / Playwright; native Windows calls mocked",
+  "suites": [
+    {
+      "suite": "living UI",
+      "status": "passed",
+      "output": "PASS: 7 mascots, Birya persists, 6 settings tabs, cursor, affection/play/sleep, event reactions, liquid, alpha, reduced motion, web fallback, context links, 390px and light palette.\n"
+    },
+    {
+      "suite": "existing UI regression",
+      "status": "passed",
+      "output": "PASS: desktop-bridge and browser-preview UI, tabs, music commands and state, weather, notes, timer, clipboard, provider switching and persistence; no renderer exceptions.\n"
+    },
+    {
+      "suite": "mascots regression",
+      "status": "passed",
+      "output": "PASS: classic + five mascots, live changes, animations, persistence, motion-off, circle, 680/390 widths and interaction.\n"
+    },
+    {
+      "suite": "themes",
+      "status": "passed",
+      "output": "PASS: equalizer 5x density 3.5x speed; five palettes, persistence, profile save/restore, legacy dark, unchanged widgets/effects, desktop/mobile.\n"
+    },
+    {
+      "suite": "filled surfaces",
+      "status": "passed",
+      "output": "PASS: 10 filled animated surfaces, shared positioning, filled spikes, resize, cleanup, toggle persistence and reduced motion\n"
+    },
+    {
+      "suite": "music controllers",
+      "status": "passed",
+      "output": "PASS: Yandex controller and SoundCloud generic controller use real Media Session handlers (play, pause, previous, next, seek) on offline fixture.\n"
+    },
+    {
+      "suite": "motion interruption",
+      "status": "passed",
+      "output": "PASS: rapid interruption/reversal and final circle geometry\n"
+    }
+  ],
+  "additionalPassed": [
+    "system-controls.cjs: trust, allowlists, validation, confirmation cancellation, mocked commands",
+    "new-backend.cjs: monitor and encrypted mail controller"
+  ],
+  "notExecuted": [
+    "Windows runtime integration",
+    "Windows installer build",
+    "live suspend/shutdown/restart",
+    "actual capture exclusion and login autostart"
+  ]
+}

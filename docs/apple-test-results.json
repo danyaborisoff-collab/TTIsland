@@ -1,0 +1,14 @@
+{
+  "version": "0.16.3-rc.2",
+  "checks": [
+    "fourth provider and packaged adapter",
+    "real HTML audio + Media Session: metadata, artwork, play/pause, next/previous, seek, audible volume property, mute, invalid input, stale-track guard",
+    "no adapter injection into login, lookalike host, HTTP, userinfo or nonstandard port",
+    "already configured public MusicKit instance: all transport methods and album artwork",
+    "scoped Apple player button fallback, no album-card clicks or fake player state",
+    "native-bridge UI fixture: fourth menu item, select/open, reload persistence, Yandex regression, artwork allowlist, no renderer errors"
+  ],
+  "liveAppleLoginTested": false,
+  "liveDRMPlaybackTested": false,
+  "windowsBuildTested": false
+}

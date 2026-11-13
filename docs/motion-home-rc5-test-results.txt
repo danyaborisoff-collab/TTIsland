@@ -1,0 +1,11 @@
+TTIsland 0.16.3-rc.5 — результаты проверки
+Среда: Linux Chromium, нативное окно и Windows API имитируются.
+
+PASS tests/motion-home-smooth.cjs — главная -> минимум, сервис -> главная, сервис -> минимум, быстрый разворот.
+PASS tests/service-bottom-frames.cjs — возврат из music/weather/ai в home/timer/settings, нестандартные размеры, отключение анимации.
+PASS tests/motion-coordination.cjs — центрирование, разворот, порядок нативного вида и режим без анимации.
+PASS tests/motion-endpoint.cjs — 20 переходов, размеры 560/680/900, DPR 1/1.25/2.
+PASS tests/transition-frames.cjs — формы, видимость, порядок изменения размера, быстрые развороты.
+PASS tests/release-readiness.cjs, dashboard-grid.cjs, home-no-settings.cjs, service-resize-ipc.cjs, window-motion.cjs.
+
+Примечание: tests/service-bottom-frames.cjs обновлён под новую реализацию: в сценарии возврата на главную фиксированная высота содержимого проверяется отдельно, а плавная геометрия проверяется по внешнему контуру. Реальный Windows/Electron и производительность на целевом ПК не проверены.

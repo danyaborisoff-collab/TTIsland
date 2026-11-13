@@ -1,0 +1,99 @@
+
+> ttisland@0.16.3-rc.7 test:motion
+> node tests/motion-coordination.cjs && node tests/window-motion.cjs && node tests/motion-transition.cjs && node tests/transition-frames.cjs && node tests/service-bottom-frames.cjs && node tests/service-resize-ipc.cjs
+
+PASS: collapse {"samples":39,"maxCenterDrift":0,"maxFrameStep":29.3}
+PASS: expand {"samples":39,"maxCenterDrift":0,"maxFrameStep":29.3}
+PASS: small-to-large tab {"samples":38,"maxCenterDrift":0,"maxFrameStep":23.8}
+PASS: large-to-small tab {"samples":39,"maxCenterDrift":0,"maxFrameStep":46.2}
+PASS: 8 motion coordination checks
+PASS: fade handshake, viewport ownership, stale acknowledgements, show/hide reversal, fallback and quit safety
+PASS: rapid interruption/reversal and final circle geometry
+collapse frames=49 resizes=26 max-step=29.3
+expand frames=50 resizes=26 max-step=29.4
+interrupt frames=49 resizes=38 max-step=28.9
+open service frames=61 resizes=26 max-step=23.7
+close service frames=66 resizes=25 max-step=33.8
+collapse island frames=49 resizes=26 max-step=29.1
+expand island frames=48 resizes=26 max-step=29.3
+collapse capsule frames=49 resizes=26 max-step=29.3
+expand capsule frames=49 resizes=26 max-step=29.3
+collapse circle frames=49 resizes=26 max-step=37.3
+expand circle frames=48 resizes=26 max-step=37.3
+collapse square frames=48 resizes=26 max-step=29.1
+expand square frames=48 resizes=26 max-step=29.3
+collapse cloud frames=47 resizes=24 max-step=58.1
+expand cloud frames=46 resizes=26 max-step=29.1
+open service custom size frames=39 resizes=16 max-step=47.5
+close service custom size frames=41 resizes=11 max-step=27.6
+PASS: no blank canvas or large geometry jumps; screenshot alpha, service resize ordering and reversal
+PASS: music -> home frames: 64
+PASS: music -> timer frames: 62
+PASS: music -> settings frames: 67
+PASS: weather -> home frames: 64
+PASS: weather -> timer frames: 67
+PASS: weather -> settings frames: 65
+PASS: ai -> home frames: 70
+PASS: ai -> timer frames: 67
+PASS: ai -> settings frames: 73
+PASS: custom size {"width":560,"height":500}
+PASS: custom size {"width":900,"height":700}
+PASS: motion off
+PASS: trusted service IPC keeps compact state and defers expanded geometry
+
+> ttisland@0.16.3-rc.7 test:motion-endpoint
+> node tests/motion-endpoint.cjs
+
+PASS: normal -> service 560 DPR=1 canvas writes=2
+PASS: service -> normal 560 DPR=1 canvas writes=0
+PASS: expanded -> compact 560 DPR=1 canvas writes=0
+PASS: compact -> expanded 560 DPR=1 canvas writes=2
+PASS: normal -> service 680 DPR=1 canvas writes=2
+PASS: service -> normal 680 DPR=1 canvas writes=0
+PASS: expanded -> compact 680 DPR=1 canvas writes=0
+PASS: compact -> expanded 680 DPR=1 canvas writes=2
+PASS: normal -> service 900 DPR=1 canvas writes=2
+PASS: service -> normal 900 DPR=1 canvas writes=0
+PASS: expanded -> compact 900 DPR=1 canvas writes=0
+PASS: compact -> expanded 900 DPR=1 canvas writes=2
+PASS: normal -> service 680 DPR=1.25 canvas writes=2
+PASS: service -> normal 680 DPR=1.25 canvas writes=0
+PASS: expanded -> compact 680 DPR=1.25 canvas writes=0
+PASS: compact -> expanded 680 DPR=1.25 canvas writes=2
+PASS: normal -> service 680 DPR=2 canvas writes=2
+PASS: service -> normal 680 DPR=2 canvas writes=0
+PASS: expanded -> compact 680 DPR=2 canvas writes=0
+PASS: compact -> expanded 680 DPR=2 canvas writes=2
+PASS: 20 strict end-state phases
+
+> ttisland@0.16.3-rc.7 test:motion-home
+> node tests/motion-home-smooth.cjs
+
+PASS home -> compact: no visible breakpoint switch or repeated home layout
+PASS service -> home: dashboard revealed at stable target size
+PASS service -> compact: remains centred and monotonic
+PASS rapid reversal and no renderer exceptions
+
+> ttisland@0.16.3-rc.7 test:motion-handoff
+> node tests/anchor-and-service-handoff.cjs && node tests/service-handoff-ui.cjs && node tests/contour-transition-cost.cjs
+
+PASS: shrinking uses the visible screen-space centre and top at edges; reset remains explicit
+PASS: capture only the attached service and discard stale results
+PASS: in-memory snapshot fades after native detach and late captures are ignored
+PASS: home-collapse draws: 37 frames: 36
+PASS: service-home draws: 37 frames: 37
+PASS: collapse visibility, scrollbar, header fade, service-to-panel and slow capture
+
+> ttisland@0.16.3-rc.7 test:release
+> node tests/release-readiness.cjs && node tests/device-control.cjs && node tests/system-controls.cjs && node tests/home-no-settings.cjs && node tests/liquid-feature.cjs
+
+PASS: native ASAR-unpacked paths, build files, NSIS config, no automatic public release.
+PASS: task/field validation, GUID/SSID bounds, secret via stdin only, fixed non-shell process, JSON validation, concurrency guard, shutdown cleanup, unsupported platform. Windows API execution not performed.
+PASS: trusted sender, strict URI/action allowlists, boolean validation, autostart, capture persistence, confirmation cancellation, four fixed power commands; all Windows calls mocked.
+PASS: no Settings/Customize buttons or gears on home, top and footer; stays removed after navigation, theme, reload, mobile; settings accessible from other tabs and Ctrl+Comma.
+PASS: 55 palette/effect combinations, 5 presets, custom profiles preserve global on/off and strength, persistence, old liquid migration, off-effect fluid, reduced motion, idle policy, collapse/circle, 390px.
+
+> ttisland@0.16.3-rc.7 check:windows
+> node tests/windows-smoke.cjs
+
+This check requires Windows 10/11; no actions performed.

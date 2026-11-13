@@ -1,0 +1,60 @@
+TTIsland 0.16.3-rc.4 — текущая проверка
+Linux Chromium; нативное окно и Windows API имитируются.
+Реальный Windows/Electron, установщик и драйвер не запускались.
+
+=== endpoint ===
+PASS: normal -> service 560 DPR=1 canvas writes=2
+PASS: service -> normal 560 DPR=1 canvas writes=0
+PASS: expanded -> compact 560 DPR=1 canvas writes=0
+PASS: compact -> expanded 560 DPR=1 canvas writes=2
+PASS: normal -> service 680 DPR=1 canvas writes=2
+PASS: service -> normal 680 DPR=1 canvas writes=0
+PASS: expanded -> compact 680 DPR=1 canvas writes=0
+PASS: compact -> expanded 680 DPR=1 canvas writes=2
+PASS: normal -> service 900 DPR=1 canvas writes=2
+PASS: service -> normal 900 DPR=1 canvas writes=0
+PASS: expanded -> compact 900 DPR=1 canvas writes=0
+PASS: compact -> expanded 900 DPR=1 canvas writes=2
+PASS: normal -> service 680 DPR=1.25 canvas writes=2
+PASS: service -> normal 680 DPR=1.25 canvas writes=0
+PASS: expanded -> compact 680 DPR=1.25 canvas writes=0
+PASS: compact -> expanded 680 DPR=1.25 canvas writes=2
+PASS: normal -> service 680 DPR=2 canvas writes=2
+PASS: service -> normal 680 DPR=2 canvas writes=2
+PASS: expanded -> compact 680 DPR=2 canvas writes=0
+PASS: compact -> expanded 680 DPR=2 canvas writes=2
+PASS: 20 strict end-state phases
+
+=== motion-coordination ===
+PASS: collapse {"samples":40,"maxCenterDrift":0,"maxFrameStep":29.3}
+PASS: expand {"samples":40,"maxCenterDrift":0,"maxFrameStep":29.1}
+PASS: small-to-large tab {"samples":33,"maxCenterDrift":0,"maxFrameStep":44.5}
+PASS: large-to-small tab {"samples":34,"maxCenterDrift":0,"maxFrameStep":47.5}
+PASS: 8 motion coordination checks
+
+=== motion-transition ===
+PASS: rapid interruption/reversal and final circle geometry
+
+=== regression ===
+PASS: desktop-bridge and browser-preview UI, tabs, music commands and state, weather, notes, timer, clipboard, provider switching and persistence; no renderer exceptions.
+
+=== dashboard-grid ===
+PASS: all blocks, mixed sizes, no collisions, scroll, empty state and restore at 680/390
+
+=== liquid-feature ===
+PASS: 55 palette/effect combinations, 5 presets, custom profiles preserve global on/off and strength, persistence, old liquid migration, off-effect fluid, reduced motion, idle policy, collapse/circle, 390px.
+
+=== home-no-settings ===
+PASS: no Settings/Customize buttons or gears on home, top and footer; stays removed after navigation, theme, reload, mobile; settings accessible from other tabs and Ctrl+Comma.
+
+=== collapse-anchor ===
+PASS: compact window keeps actual center near both screen edges and persists the anchor
+
+=== window-motion ===
+PASS: fade handshake, viewport ownership, stale acknowledgements, show/hide reversal, fallback and quit safety
+
+=== service-resize-ipc ===
+PASS: trusted service IPC keeps compact state and defers expanded geometry
+
+=== release-readiness ===
+PASS: native ASAR-unpacked paths, build files, NSIS config, no automatic public release.

@@ -1,0 +1,9 @@
+TTIsland 0.16.3-rc.6 — результаты проверки
+Среда: Linux Chromium; системное окно, Electron IPC и Windows API моделируются.
+
+PASS tests/contour-transition-cost.cjs — примерно одна отрисовка контура на кадр при сворачивании главной и возврате из сервиса.
+PASS tests/anchor-and-service-handoff.cjs — фактический центр и верх при сжатии на краях, явный сброс, проверка источника и отсечение устаревшего снимка.
+PASS tests/service-handoff-ui.cjs — временный кадр, затухание и удаление, отмена позднего результата при новой навигации.
+PASS tests/motion-home-smooth.cjs, collapse-anchor.cjs, motion-coordination.cjs, motion-endpoint.cjs, service-bottom-frames.cjs, transition-frames.cjs, service-resize-ipc.cjs, window-motion.cjs и release-readiness.cjs.
+
+Встроенная страница, настоящий Electron/Windows и работа видеодрайвера не проверялись. Фактическая плавность зависит от целевого ПК.

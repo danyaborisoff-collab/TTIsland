@@ -1,0 +1,37 @@
+{
+  "version": "0.16.0",
+  "environment": "Linux + Chromium/Playwright; native Windows responses mocked",
+  "checks": [
+    {
+      "name": "liquid feature: palettes, effects, profiles, migration",
+      "passed": true,
+      "output": "PASS: 55 palette/effect combinations, 5 presets, custom profiles preserve global on/off and strength, persistence, old liquid migration, off-effect fluid, reduced motion, idle policy, collapse/circle, 390px."
+    },
+    {
+      "name": "themes and palettes",
+      "passed": true,
+      "output": "PASS: equalizer 5x density 3.5x speed; five palettes, persistence, profile save/restore, legacy dark, unchanged widgets/effects, desktop/mobile."
+    },
+    {
+      "name": "in-app device UI",
+      "passed": true,
+      "output": "PASS: no home customize button; Birya text; real-task UI for Wi-Fi toggles/list/password/connect/disconnect/forget, error feedback, Bluetooth power/pairing removal, VPN, volume/mute, theme/toasts, brightness, power routing, read-only consent, no external settings links, 390px light layout; native calls mocked."
+    },
+    {
+      "name": "existing UI regression",
+      "passed": true,
+      "output": "PASS: desktop-bridge and browser-preview UI, tabs, music commands and state, weather, notes, timer, clipboard, provider switching and persistence; no renderer exceptions."
+    }
+  ],
+  "visualThemes": [
+    "dark",
+    "slate",
+    "forest",
+    "light",
+    "sand"
+  ],
+  "notExecuted": [
+    "Windows hardware/API integration",
+    "Windows installer build"
+  ]
+}

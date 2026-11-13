@@ -1,0 +1,25 @@
+{
+  "version": "0.12.1",
+  "environment": "Linux, headless Chromium; no Windows or Electron runtime",
+  "passed": [
+    "JavaScript syntax: all JS/CJS and inline renderer",
+    "Desktop UI: startup, all tabs, weather routing and bounds with mocked Electron bridge",
+    "Desktop UI: music button commands and state updates with mocked Electron bridge",
+    "Notes and selected music service persist across reload; timer and manual clipboard",
+    "Browser preview: startup and navigation across all tabs without renderer exceptions",
+    "Offline Chromium Media Session fixture: Yandex controller play/pause/next/previous",
+    "Offline Chromium Media Session fixture: SoundCloud controller play/pause and seek via seekto",
+    "Packaging: every configured build file exists; extras.css included"
+  ],
+  "notTested": [
+    "Real Windows and Electron runtime, Windows installer",
+    "Live music services, accounts, region/DRM and website changes",
+    "Weather live website and network access",
+    "Windows Bluetooth, audio devices, OCR, microphone, loopback and screen capture hardware"
+  ],
+  "testScripts": [
+    "tests/regression.cjs",
+    "tests/music.cjs"
+  ],
+  "note": "The UI bridge is mocked. The Media Session fixture does not access actual services. Earlier results in TEST-RESULTS-0.12-original.json are from the supplied archive and were not revalidated."
+}

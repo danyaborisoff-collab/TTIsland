@@ -1,0 +1,13 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const src=fs.readFileSync(require('node:path').join(__dirname,'../main.cjs'),'utf8');
+const line=src.split('\n').find(s=>s.startsWith("ipcMain.handle('service-select'"));assert(line);
+const ctx={activeService:null,collapsed:false,serviceURLs:{music:'https://example.com'},calls:[],handlers:{}};
+ctx.trusted=()=>ctx.calls.push('trusted');ctx.detachService=()=>ctx.calls.push('detach');ctx.getService=id=>ctx.calls.push('load:'+id);ctx.positionWindow=small=>{ctx.collapsed=small;ctx.calls.push('resize:'+small)};ctx.ipcMain={handle:(name,fn)=>ctx.handlers[name]=fn};vm.runInNewContext(line,ctx);
+const select=ctx.handlers['service-select'];
+assert.equal(select({},'music',false),true);assert(ctx.calls.includes('resize:false'));ctx.calls=[];
+assert.equal(select({},null,true),false);assert(!ctx.calls.some(x=>x.startsWith('resize:')),'deferred exit must not shrink early');ctx.calls=[];
+assert.equal(select({},null,false),false);assert(ctx.calls.includes('resize:false'),'ordinary exit updates bounds');ctx.calls=[];
+assert.equal(select({},'music',true),true);assert(!ctx.calls.some(x=>x.startsWith('resize:')),'expanded service entry must defer geometry to the motion controller');ctx.calls=[];
+ctx.collapsed=true;assert.equal(select({},'music',false),true);assert(ctx.calls.includes('resize:true'),'service selection must respect collapsed state');ctx.calls=[];
+assert.equal(select({},null,true),false);assert(ctx.calls.includes('resize:true'),'cannot defer when compact');console.log('PASS: trusted service IPC keeps compact state and defers expanded geometry');

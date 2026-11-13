@@ -1,0 +1,11 @@
+'use strict';
+const paletteCatalog=[
+ {id:'dark',name:'Оригинал',description:'Графит и лиловый',swatches:['#09090b','#1b1b20','#b9a5ff']},
+ {id:'slate',name:'Сумерки',description:'Тёмный сине-серый',swatches:['#182334','#2b3a4d','#a8c9f5']},
+ {id:'forest',name:'Шалфей',description:'Спокойный зелёный',swatches:['#172622','#2a3d35','#b8dbba']},
+ {id:'light',name:'Светлая',description:'Мягкий белый и сиреневый',swatches:['#f4f2f8','#ffffff','#6351a5']},
+ {id:'sand',name:'Песок',description:'Крем, песок и карамель',swatches:['#eee1c7','#fbf2df','#96633c']},
+ {id:'burgundy',name:'Бордовая',description:'Вино, пыльная роза и медь',swatches:['#2b0f19','#3e1825','#e5b5a0']}
+];
+function applyPalette(id){settings.palette=paletteCatalog.some(p=>p.id===id)?id:'dark';document.body.dataset.palette=settings.palette;if(window.waveReady){resizeWaveCanvas();updateWaveAnimation()}}
+function installPalettes(){applyPalette(settings.palette);const mount=mountExtraSettings;mountExtraSettings=function(){mount();const target=$('.quick-custom');if(!target)return;target.insertAdjacentHTML('afterend',`<section class="extra-section palette-config"><div class="extra-heading"><h3>Цвет острова</h3><span class="muted">Меняется сразу</span></div><p class="help-line">Цвета интерфейса и карточек. Жидкая поверхность работает с каждым цветом; её переключатель и сила сохраняются. Форма, эффект и виджеты не меняются.</p><div class="palette-grid" role="group" aria-label="Цвет острова">${paletteCatalog.map(p=>`<button type="button" class="palette-option" data-palette-choice="${p.id}" aria-pressed="${settings.palette===p.id}"><span class="palette-sample" aria-hidden="true" style="--sample-base:${p.swatches[0]};--sample-card:${p.swatches[1]};--sample-accent:${p.swatches[2]}"><i></i><b></b></span><span class="palette-copy"><strong>${p.name}</strong><small>${p.description}</small></span></button>`).join('')}</div></section>`);document.querySelectorAll('[data-palette-choice]').forEach(button=>button.onclick=()=>{applyPalette(button.dataset.paletteChoice);persist('island.settings',settings);profileActive='';persist('island.activeProfile','');document.querySelectorAll('[data-palette-choice]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.paletteChoice===settings.palette)));document.querySelectorAll('[data-theme]').forEach(x=>x.classList.remove('primary'))})}}

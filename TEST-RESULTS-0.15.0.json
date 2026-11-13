@@ -1,0 +1,38 @@
+{
+  "version": "0.15.0",
+  "environment": "Linux, Chromium/Playwright; native Windows calls mocked",
+  "checks": [
+    {
+      "name": "device UI",
+      "passed": true,
+      "output": "PASS: no home customize button; Birya text; real-task UI for Wi-Fi toggles/list/password/connect/disconnect/forget, error feedback, Bluetooth power/pairing removal, VPN, volume/mute, theme/toasts, brightness, power routing, read-only consent, no external settings links, 390px light layout; native calls mocked."
+    },
+    {
+      "name": "device validation and runner",
+      "passed": true,
+      "output": "PASS: task/field validation, GUID/SSID bounds, secret via stdin only, fixed non-shell process, JSON validation, concurrency guard, shutdown cleanup, unsupported platform. Windows API execution not performed."
+    },
+    {
+      "name": "power confirmations and routing",
+      "passed": true,
+      "output": "PASS: trusted sender, strict URI/action allowlists, boolean validation, autostart, capture persistence, confirmation cancellation, four fixed power commands; all Windows calls mocked."
+    },
+    {
+      "name": "existing UI regression",
+      "passed": true,
+      "output": "PASS: desktop-bridge and browser-preview UI, tabs, music commands and state, weather, notes, timer, clipboard, provider switching and persistence; no renderer exceptions."
+    },
+    {
+      "name": "mascots",
+      "passed": true,
+      "output": "PASS: classic + five mascots, live changes, animations, persistence, motion-off, circle, 680/390 widths and interaction."
+    }
+  ],
+  "notExecuted": [
+    "C# compilation under Windows",
+    "live WLAN/Bluetooth hardware operations",
+    "actual shutdown/suspend/restart",
+    "Windows EXE build"
+  ],
+  "windowsCheck": "CHECK-WINDOWS.cmd"
+}

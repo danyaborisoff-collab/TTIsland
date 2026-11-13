@@ -1,0 +1,20 @@
+/* Player meters follow the palette. Outline effect colors remain user-controlled. */
+body[data-palette="dark"]{--music-eq:#b9a5ff}
+body[data-palette="slate"]{--music-eq:#a8c9f5}
+body[data-palette="forest"]{--music-eq:#b8dbba}
+body[data-palette="light"]{--music-eq:#6351a5}
+body[data-palette="sand"]{--music-eq:#82563f}
+.card-eq i,.compact-eq i{background:var(--music-eq,#b9a5ff)}
+.playing .card-eq{filter:drop-shadow(0 0 5px color-mix(in srgb,var(--music-eq,#b9a5ff) 50%,transparent))}
+.wireless-badge{font-size:10px;color:var(--muted-p,#aaa2bd);letter-spacing:.06em;white-space:nowrap}
+.wireless-intro{padding:16px;border:1px solid var(--line-p,#373340);border-radius:14px;background:var(--panel,#1b1b22);color:var(--text,#f4f1f8)}
+.wireless-lead{display:flex;align-items:center;gap:12px}
+.wireless-icon,.wireless-device-icon{flex:none;display:grid;place-items:center;color:var(--accent-p,#b9a5ff);background:var(--raised,#282630);border:1px solid var(--line-p,#403b4d);border-radius:10px;width:42px;height:42px;font-size:22px}
+.wireless-lead strong{font-size:14px}.wireless-lead p{margin:3px 0 0;color:var(--secondary,#b7b0c2);font-size:12px}
+.wireless-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.wireless-actions button{min-height:38px}
+.wireless-hint{font-size:11px;line-height:1.5;color:var(--secondary,#b7b0c2);margin:12px 0 0}
+.wireless-list-heading{display:flex;justify-content:space-between;align-items:center;margin:18px 0 8px;font-size:13px}.wireless-list-heading span{font-size:11px;color:var(--secondary,#b7b0c2)}
+.wireless-device{display:flex;align-items:center;gap:10px;padding:10px;margin:0 0 7px;border:1px solid var(--line-p,#373340);border-radius:12px;background:var(--panel,#1b1b22);color:var(--text,#f4f1f8)}
+.wireless-device-icon{width:36px;height:36px;font-size:18px}.wireless-device-copy{min-width:0;flex:1}.wireless-device-copy strong,.wireless-device-copy small{display:block;overflow-wrap:anywhere}.wireless-device-copy strong{font-size:12px}.wireless-device-copy small{font-size:11px;color:var(--secondary,#b7b0c2)}
+.wireless-device-connect{flex:none}.wireless-message{font-size:12px;line-height:1.5;color:var(--secondary,#b7b0c2);padding:10px 0;margin:0}.wireless-error{color:var(--danger,#ffb9b6)}
+@container tt-island (max-width:480px){.wireless-intro{padding:12px}.wireless-actions{margin-top:10px}.wireless-hint{margin-top:8px}.wireless-list-heading{margin-top:12px}.wireless-device{flex-wrap:wrap}.wireless-device-connect{margin-left:46px}.wireless-actions button{flex:1 1 auto}.wireless-badge{font-size:9px}}

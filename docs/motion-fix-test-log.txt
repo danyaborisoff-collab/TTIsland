@@ -1,0 +1,75 @@
+TTIsland 0.16.3-rc.3 — результаты целевых проверок
+
+Среда: Linux/Chromium; Windows API и размеры системного окна имитируются.
+Настоящий Windows/Electron и установщик не запускались.
+
+=== Coordinated transitions and rapid input ===
+PASS: collapse {"samples":37,"maxCenterDrift":0,"maxFrameStep":29.1}
+PASS: expand {"samples":37,"maxCenterDrift":0,"maxFrameStep":47.5}
+PASS: small-to-large tab {"samples":28,"maxCenterDrift":0,"maxFrameStep":47.2}
+PASS: large-to-small tab {"samples":28,"maxCenterDrift":0,"maxFrameStep":47.3}
+PASS: 8 motion coordination checks
+
+=== Interruption and circle geometry ===
+PASS: rapid interruption/reversal and final circle geometry
+
+=== Frame geometry, shapes, viewport ordering and service bottom edge ===
+PASS: rapid interruption/reversal and final circle geometry
+collapse frames=48 resizes=24 max-step=41.6
+expand frames=46 resizes=24 max-step=37.1
+interrupt frames=40 resizes=30 max-step=51.0
+open service frames=51 resizes=20 max-step=46.5
+close service frames=59 resizes=19 max-step=46.5
+collapse island frames=46 resizes=23 max-step=50.7
+expand island frames=47 resizes=25 max-step=29.3
+collapse capsule frames=47 resizes=24 max-step=46.5
+expand capsule frames=47 resizes=25 max-step=29.3
+collapse circle frames=47 resizes=24 max-step=53.0
+expand circle frames=46 resizes=25 max-step=37.1
+collapse square frames=45 resizes=22 max-step=57.2
+expand square frames=35 resizes=16 max-step=59.9
+collapse cloud frames=29 resizes=14 max-step=87.0
+expand cloud frames=36 resizes=15 max-step=57.0
+open service custom size frames=29 resizes=11 max-step=27.5
+close service custom size frames=50 resizes=13 max-step=18.4
+PASS: no blank canvas or large geometry jumps; screenshot alpha, service resize ordering and reversal
+PASS: music -> home frames: 64
+PASS: music -> timer frames: 67
+PASS: music -> settings frames: 66
+PASS: weather -> home frames: 63
+PASS: weather -> timer frames: 68
+PASS: weather -> settings frames: 63
+PASS: ai -> home frames: 59
+PASS: ai -> timer frames: 67
+PASS: ai -> settings frames: 63
+PASS: custom size {"width":560,"height":500}
+PASS: custom size {"width":900,"height":700}
+PASS: motion off
+PASS: trusted service IPC keeps compact state and defers only expanded exit
+PASS: fade handshake, viewport ownership, stale acknowledgements, show/hide reversal, fallback and quit safety
+PASS: collapse {"samples":36,"maxCenterDrift":0,"maxFrameStep":36.1}
+PASS: expand {"samples":40,"maxCenterDrift":0,"maxFrameStep":29.3}
+PASS: small-to-large tab {"samples":29,"maxCenterDrift":0,"maxFrameStep":47.3}
+PASS: large-to-small tab {"samples":31,"maxCenterDrift":0,"maxFrameStep":46.5}
+PASS: 7 motion coordination checks
+
+=== UI regression and persistence ===
+PASS: desktop-bridge and browser-preview UI, tabs, music commands and state, weather, notes, timer, clipboard, provider switching and persistence; no renderer exceptions.
+
+=== Tray lifecycle ===
+PASS: fade handshake, viewport ownership, stale acknowledgements, show/hide reversal, fallback and quit safety
+
+=== Deferred native service geometry ===
+PASS: trusted service IPC keeps compact state and defers expanded geometry
+
+=== Widget grid ===
+PASS: all blocks, mixed sizes, no collisions, scroll, empty state and restore at 680/390
+
+=== Packaging ===
+PASS: native ASAR-unpacked paths, build files, NSIS config, no automatic public release.
+
+=== Intermediate frame capture ===
+mid-collapse {"width":490,"height":271,"canvasCenterOffset":0,"viewport":{"width":680,"height":540}}
+mid-expand {"width":490,"height":271,"canvasCenterOffset":0,"viewport":{"width":680,"height":540}}
+mid-service-open {"width":820,"height":643,"canvasCenterOffset":0,"viewport":{"width":1040,"height":840}}
+mid-service-close {"width":820,"height":644,"canvasCenterOffset":0,"viewport":{"width":1040,"height":840}}

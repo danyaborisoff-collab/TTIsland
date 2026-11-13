@@ -1,0 +1,84 @@
+{
+  "version": "0.12.0",
+  "passed": [
+    "Profile save, apply, reload and quick tools",
+    "Audio output UI sends selected endpoint",
+    "Bluetooth unknown level never displayed as zero",
+    "OCR region sent cropped; result/copy controls",
+    "Real AudioContext oscillator drives energy; silence calms it",
+    "Stopping analysis ends all captured tracks",
+    "Capture requires consent and trusted main frame",
+    "Capture grant is one-use; recording conflict denied",
+    "Non-Windows fails honestly",
+    "390px no horizontal overflow",
+    "No renderer errors",
+    "Four music services selectable; Yandex-only buttons hidden elsewhere",
+    "Four AI services and keyboard-safe dropdowns",
+    "Recorded real WebAudio fixture signal to valid 16k PCM WAV",
+    "Stopping and navigation end all microphone tracks",
+    "Transcription UI saves editable text as a local note",
+    "Missing speech engine error is visible",
+    "Window dimensions update via validated layout request",
+    "Generic adapter invokes real captured MediaSession callbacks",
+    "Closed perimeter with outward normals on all sides",
+    "Five effects: bottom coverage >97%, zero edge clipping at 150% DPI",
+    "Expanded and compact contour fit native viewport padding",
+    "Drag grip emits start/move/end and does not collapse island",
+    "Window close hides; hidden Alt+Space restores expanded window",
+    "Explicit app exit is not intercepted; cancelled exit returns to tray behavior",
+    "No hiding when both tray and shortcut are unavailable",
+    "Per-effect colors and preview respect motion-off",
+    "50 additional animation/bounds checks: 100% and 200% DPI, min/max sizes, service view, compact widths"
+  ],
+  "notTested": [
+    "Windows COM audio switching on hardware",
+    "Windows WinRT OCR engine",
+    "Bluetooth device drivers",
+    "Actual Windows loopback capture",
+    "Live Yandex account",
+    "Windows ContainerId Bluetooth enumeration",
+    "Windows System.Speech dictation on hardware",
+    "Real microphone hardware",
+    "Spotify DRM and live service login flows",
+    "Native Windows dragging/multi-monitor layout",
+    "Real Windows tray and Alt+Space registration",
+    "Real Windows cross-monitor drag/DPI changes"
+  ],
+  "contourMeasurements": [
+    {
+      "mode": "waves",
+      "bottom": 512,
+      "height": 540,
+      "edgePixels": 0,
+      "bottomCoverage": 1
+    },
+    {
+      "mode": "pulse",
+      "bottom": 512,
+      "height": 540,
+      "edgePixels": 0,
+      "bottomCoverage": 1
+    },
+    {
+      "mode": "spikes",
+      "bottom": 512,
+      "height": 540,
+      "edgePixels": 0,
+      "bottomCoverage": 1
+    },
+    {
+      "mode": "orbit",
+      "bottom": 512,
+      "height": 540,
+      "edgePixels": 0,
+      "bottomCoverage": 1
+    },
+    {
+      "mode": "aurora",
+      "bottom": 512,
+      "height": 540,
+      "edgePixels": 0,
+      "bottomCoverage": 1
+    }
+  ]
+}

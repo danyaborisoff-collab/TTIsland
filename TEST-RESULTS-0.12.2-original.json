@@ -1,0 +1,28 @@
+{
+  "version": "0.12.2",
+  "environment": "Linux headless Chromium, real public Yandex Weather page plus local mock Electron bridge; Windows/Electron unavailable",
+  "passed": [
+    "Live Chromium requested https://yandex.ru/pogoda/ru/moscow and read current temperature, condition, city from real page; no personal account",
+    "Real Yandex current-card HTML fetched and parsed, and synthesized negative/zero/missing-current fixtures",
+    "Weather: 10-second UI polling with mocked bridge; error and stale state, recovery; no forecast substituted",
+    "Weather controller: host/path validation, lat/lon preservation, error, request coalescing and hidden-page reload logic in mocks",
+    "Six unique tiles; swapping selections and persistence across reload; full-height layout at 680px and 390px",
+    "Weather, AI, timer, clipboard, notes, record, sound, battery and system widget navigation; profile application",
+    "Desktop bridge UI: tabs, music commands and state, notes, timer, clipboard and service provider persistence",
+    "Offline Media Session fixture: Yandex play/pause/next/previous and SoundCloud play/pause/seek",
+    "Syntax checks and packaging manifest verification"
+  ],
+  "notTested": [
+    "Windows runtime, installer, actual WebContentsView behavior and user-selected city persistence on real Windows",
+    "Real music services and personal accounts, subscriptions and DRM",
+    "Windows audio, Bluetooth, OCR, microphone, screen recording and physical devices",
+    "Server-side freshness of Yandex weather or future site layout changes"
+  ],
+  "testScripts": [
+    "tests/weather.cjs",
+    "tests/regression.cjs",
+    "tests/widgets.cjs",
+    "tests/music.cjs"
+  ],
+  "note": "All old report files are historical and refer to their own release; mocked bridges do not demonstrate Windows hardware functionality."
+}

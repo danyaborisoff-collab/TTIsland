@@ -1,0 +1,212 @@
+{
+  "version": "0.16.3-rc.4",
+  "status": "passed_targeted_checks",
+  "environment": "Chromium on Linux; native viewport and Windows APIs simulated",
+  "scope": "20 strict endpoint phases plus selected motion and UI regressions; not exhaustive Windows or FPS certification",
+  "endpoint": {
+    "version": "0.16.3-rc.4",
+    "environment": "Linux Chromium; native window and Windows APIs simulated",
+    "phases": [
+      {
+        "name": "normal -> service 560",
+        "dpr": 1,
+        "nativeCommits": 1,
+        "canvasWrites": 2,
+        "samples": 20
+      },
+      {
+        "name": "service -> normal 560",
+        "dpr": 1,
+        "nativeCommits": 1,
+        "canvasWrites": 0,
+        "samples": 18
+      },
+      {
+        "name": "expanded -> compact 560",
+        "dpr": 1,
+        "nativeCommits": 1,
+        "canvasWrites": 0,
+        "samples": 33
+      },
+      {
+        "name": "compact -> expanded 560",
+        "dpr": 1,
+        "nativeCommits": 1,
+        "canvasWrites": 2,
+        "samples": 30
+      },
+      {
+        "name": "normal -> service 680",
+        "dpr": 1,
+        "nativeCommits": 1,
+        "canvasWrites": 2,
+        "samples": 19
+      },
+      {
+        "name": "service -> normal 680",
+        "dpr": 1,
+        "nativeCommits": 1,
+        "canvasWrites": 0,
+        "samples": 21
+      },
+      {
+        "name": "expanded -> compact 680",
+        "dpr": 1,
+        "nativeCommits": 1,
+        "canvasWrites": 0,
+        "samples": 31
+      },
+      {
+        "name": "compact -> expanded 680",
+        "dpr": 1,
+        "nativeCommits": 1,
+        "canvasWrites": 2,
+        "samples": 30
+      },
+      {
+        "name": "normal -> service 900",
+        "dpr": 1,
+        "nativeCommits": 1,
+        "canvasWrites": 2,
+        "samples": 19
+      },
+      {
+        "name": "service -> normal 900",
+        "dpr": 1,
+        "nativeCommits": 1,
+        "canvasWrites": 0,
+        "samples": 18
+      },
+      {
+        "name": "expanded -> compact 900",
+        "dpr": 1,
+        "nativeCommits": 1,
+        "canvasWrites": 0,
+        "samples": 28
+      },
+      {
+        "name": "compact -> expanded 900",
+        "dpr": 1,
+        "nativeCommits": 1,
+        "canvasWrites": 2,
+        "samples": 23
+      },
+      {
+        "name": "normal -> service 680",
+        "dpr": 1.25,
+        "nativeCommits": 1,
+        "canvasWrites": 2,
+        "samples": 15
+      },
+      {
+        "name": "service -> normal 680",
+        "dpr": 1.25,
+        "nativeCommits": 1,
+        "canvasWrites": 0,
+        "samples": 16
+      },
+      {
+        "name": "expanded -> compact 680",
+        "dpr": 1.25,
+        "nativeCommits": 1,
+        "canvasWrites": 0,
+        "samples": 24
+      },
+      {
+        "name": "compact -> expanded 680",
+        "dpr": 1.25,
+        "nativeCommits": 1,
+        "canvasWrites": 2,
+        "samples": 24
+      },
+      {
+        "name": "normal -> service 680",
+        "dpr": 2,
+        "nativeCommits": 1,
+        "canvasWrites": 2,
+        "samples": 15
+      },
+      {
+        "name": "service -> normal 680",
+        "dpr": 2,
+        "nativeCommits": 1,
+        "canvasWrites": 2,
+        "samples": 14
+      },
+      {
+        "name": "expanded -> compact 680",
+        "dpr": 2,
+        "nativeCommits": 1,
+        "canvasWrites": 0,
+        "samples": 19
+      },
+      {
+        "name": "compact -> expanded 680",
+        "dpr": 2,
+        "nativeCommits": 1,
+        "canvasWrites": 2,
+        "samples": 17
+      }
+    ],
+    "status": "passed"
+  },
+  "motionCoordination": {
+    "version": "0.16.3-rc.4",
+    "environment": "Linux Chromium; native viewport and IPC simulated",
+    "checks": [
+      "Same-state requests do not restart animation or resize the host",
+      "45ms double-click reverses from the currently displayed frame",
+      "Open/close and tab morphs stay centered and do not attach a moving native webview",
+      "20/75/160ms tab storms cannot commit a stale shrink",
+      "Interrupted collapse and tab navigation survive delayed IPC",
+      "Tray reveal runs together with expansion, without a second fade or flash",
+      "Animations off and system reduced-motion use the same correct final geometry",
+      "No renderer exceptions"
+    ],
+    "frames": {
+      "collapse": {
+        "samples": 40,
+        "maxCenterDrift": 0,
+        "maxFrameStep": 29.3
+      },
+      "expand": {
+        "samples": 40,
+        "maxCenterDrift": 0,
+        "maxFrameStep": 29.1
+      },
+      "small-to-large tab": {
+        "samples": 33,
+        "maxCenterDrift": 0,
+        "maxFrameStep": 44.5
+      },
+      "large-to-small tab": {
+        "samples": 34,
+        "maxCenterDrift": 0,
+        "maxFrameStep": 47.5
+      }
+    },
+    "status": "passed"
+  },
+  "passedSuites": [
+    "endpoint",
+    "motion-coordination",
+    "motion-transition",
+    "regression",
+    "dashboard-grid",
+    "liquid-feature",
+    "home-no-settings",
+    "collapse-anchor",
+    "window-motion",
+    "service-resize-ipc",
+    "release-readiness"
+  ],
+  "syntaxCheckedScripts": 77,
+  "realWindowsElectronTested": false,
+  "installerBuilt": false,
+  "limitations": [
+    "Real Windows window-manager, display scaling and GPU behavior still require testing on the user PC.",
+    "No frame-rate guarantee.",
+    "Live accounts and DRM not tested.",
+    "Complete source archive, not a prebuilt EXE."
+  ]
+}

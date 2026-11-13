@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const root=path.join(__dirname,'..'),pkg=require('../package.json'),{resolveNativeDirectory}=require('../device-control.cjs');
+assert(pkg.build.asarUnpack.includes('native/**'));
+assert.equal(resolveNativeDirectory(root),path.join(root,'native'));
+assert.equal(resolveNativeDirectory(path.join(root,'app.asar')),path.join(root,'app.asar.unpacked','native'));
+for(const name of ['wifi.cs','audio-mixer.cs','device-control.ps1'])assert(fs.existsSync(path.join(root,'native',name)));
+for(const name of pkg.build.files)if(!name.includes('*'))assert(fs.existsSync(path.join(root,name)),name);
+assert.equal(pkg.build.publish,null);assert.equal(pkg.build.win.target,'nsis');
+const workflow=fs.readFileSync(path.join(root,'.github/workflows/windows-release.yml'),'utf8');assert(workflow.includes('--draft --prerelease'));assert(workflow.includes('npm run check:windows'));assert(workflow.includes('--publish never'));
+console.log('PASS: native ASAR-unpacked paths, build files, NSIS config, no automatic public release.');

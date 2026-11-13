@@ -1,0 +1,67 @@
+name: Import TTIsland rc8 and reset main history
+on:
+  push:
+    branches: [main]
+    paths: ['.github/ttisland-import/source.zip.b64']
+permissions:
+  contents: write
+concurrency:
+  group: ttisland-source-import
+  cancel-in-progress: false
+jobs:
+  import:
+    if: github.actor == 'danyaborisoff-collab'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Back up all fetched history before rewriting main
+        run: git bundle create "$RUNNER_TEMP/TTIsland-before-rc8.bundle" --all
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TTIsland-history-backup-before-rc8
+          path: ${{ runner.temp }}/TTIsland-before-rc8.bundle
+          retention-days: 30
+          if-no-files-found: error
+      - name: Verify and import the original source archive
+        env:
+          EXPECTED_SHA256: 4056e3782ebf1e252dd3f09d79d156b29d59e03c1451bcc655ba11dec112231d
+        shell: python
+        run: |
+          import base64,hashlib,io,os,pathlib,shutil,zipfile
+          root=pathlib.Path.cwd().resolve()
+          data=base64.b64decode((root/'.github/ttisland-import/source.zip.b64').read_bytes(),validate=True)
+          assert hashlib.sha256(data).hexdigest()==os.environ['EXPECTED_SHA256'], 'Archive checksum mismatch'
+          count=0
+          with zipfile.ZipFile(io.BytesIO(data)) as z:
+              for info in z.infolist():
+                  p=pathlib.PurePosixPath(info.filename)
+                  assert p.parts and p.parts[0]=='TTIsland' and '..' not in p.parts, 'Unsafe archive path'
+                  rel=pathlib.Path(*p.parts[1:])
+                  if not p.parts[1:] or info.is_dir(): continue
+                  assert '.git' not in rel.parts and not rel.is_absolute(), 'Unsafe Git path'
+                  target=(root/rel).resolve()
+                  assert target.is_relative_to(root), 'Path escapes repository'
+                  target.parent.mkdir(parents=True,exist_ok=True)
+                  target.write_bytes(z.read(info))
+                  count+=1
+          shutil.rmtree(root/'.github/ttisland-import')
+          if (root/'.claude').is_dir(): shutil.rmtree(root/'.claude')
+          print(f'Imported {count} files from the verified original archive')
+      - name: Create a single owner-authored root commit and update main safely
+        env:
+          EXPECTED_HEAD: ${{ github.sha }}
+          GIT_AUTHOR_NAME: danyaborisoff-collab
+          GIT_AUTHOR_EMAIL: 251506713+danyaborisoff-collab@users.noreply.github.com
+          GIT_COMMITTER_NAME: danyaborisoff-collab
+          GIT_COMMITTER_EMAIL: 251506713+danyaborisoff-collab@users.noreply.github.com
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -A
+          TREE=$(git write-tree)
+          NEW_COMMIT=$(printf '%s\n' 'Import TTIsland 0.16.3-rc.8 source' | git commit-tree "$TREE")
+          git push --force-with-lease="refs/heads/main:$EXPECTED_HEAD" origin "$NEW_COMMIT:refs/heads/main"
+          printf 'Imported TTIsland 0.16.3-rc.8. New main: %s\n' "$NEW_COMMIT" >> "$GITHUB_STEP_SUMMARY"

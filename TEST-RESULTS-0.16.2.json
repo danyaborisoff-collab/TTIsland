@@ -1,0 +1,14 @@
+{
+  "version": "0.16.2",
+  "checks": [
+    {
+      "test": "liquid state, placement, themes",
+      "result": "PASS: 55 palette/effect combinations, 5 presets, custom profiles preserve global on/off and strength, persistence, old liquid migration, off-effect fluid, reduced motion, idle policy, collapse/circle, 390px."
+    },
+    {
+      "test": "no settings on home",
+      "result": "PASS: no Settings/Customize buttons or gears on home, top and footer; stays removed after navigation, theme, reload, mobile; settings accessible from other tabs and Ctrl+Comma."
+    }
+  ],
+  "nativeWindowsTested": false
+}

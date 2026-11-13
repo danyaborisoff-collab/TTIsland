@@ -1,0 +1,6 @@
+PASS: 1728 geometry checks; three palettes, five shapes, two widths, browser/native CSS, DPR 1/1.25/1.5/2; hover/pressed/focus; click and keyboard behavior. Native Windows API not executed.
+
+PASS: compact clock format/geometry/play/pause/seek/track changes/unknown duration/Pomodoro/recording, all five shapes, desktop/mobile, sand/burgundy persistence/profiles, native transparency.
+
+PASS: tests/release-readiness.cjs
+Windows-native execution and installer build were not performed.

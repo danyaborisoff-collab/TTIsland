@@ -1,0 +1,7 @@
+{
+  "version": "0.16.1",
+  "passed": [
+    "tests/home-no-settings.cjs"
+  ],
+  "scope": "Home UI, navigation, themes, reload, 390px and Ctrl+Comma; no live Windows hardware tests"
+}

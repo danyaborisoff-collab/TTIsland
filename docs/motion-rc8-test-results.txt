@@ -1,0 +1,81 @@
+TTIsland 0.16.3-rc.8 — local test results
+Environment: Linux Chromium; Electron native window / Windows APIs mocked.
+These results do not verify actual Windows rendering or WebContentsView composition.
+
+--- anchor-and-service-handoff ---
+PASS: shrinking uses the visible screen-space centre and top at edges; reset remains explicit
+PASS: capture only the attached service and discard stale results
+--- collapse-anchor ---
+PASS: compact window keeps actual center near both screen edges and persists the anchor
+--- contour-transition-cost ---
+PASS: home-collapse draws: 37 frames: 36
+PASS: service-home draws: 34 frames: 34
+--- device-control ---
+PASS: task/field validation, GUID/SSID bounds, secret via stdin only, fixed non-shell process, JSON validation, concurrency guard, shutdown cleanup, unsupported platform. Windows API execution not performed.
+--- home-no-settings ---
+PASS: no Settings/Customize buttons or gears on home, top and footer; stays removed after navigation, theme, reload, mobile; settings accessible from other tabs and Ctrl+Comma.
+--- liquid-feature ---
+PASS: 55 palette/effect combinations, 5 presets, custom profiles preserve global on/off and strength, persistence, old liquid migration, off-effect fluid, reduced motion, idle policy, collapse/circle, 390px.
+--- motion-compact ---
+PASS: compact 380x120, circle and contour fit
+--- motion-coordination ---
+PASS: collapse {"samples":39,"maxCenterDrift":0,"maxFrameStep":29.1}
+PASS: expand {"samples":39,"maxCenterDrift":0,"maxFrameStep":29.3}
+PASS: small-to-large tab {"samples":36,"maxCenterDrift":0,"maxFrameStep":42}
+PASS: large-to-small tab {"samples":39,"maxCenterDrift":0,"maxFrameStep":47.2}
+PASS: 8 motion coordination checks
+--- motion-home-smooth ---
+PASS home -> compact: no visible breakpoint switch or repeated home layout
+PASS service -> home: dashboard revealed at stable target size
+PASS service -> compact: remains centred and monotonic
+PASS rapid reversal and no renderer exceptions
+--- motion-transition ---
+PASS: rapid interruption/reversal and final circle geometry
+--- motion-visible-frames ---
+PASS: collapse visibility, scrollbar, header fade, service-to-panel and slow capture
+--- rc8-visible-handoff ---
+PASS: decoded handoff, non-overlapping destination, uniform scale and reversals (mocked native view)
+--- release-readiness ---
+PASS: native ASAR-unpacked paths, build files, NSIS config, no automatic public release.
+--- service-bottom-frames ---
+PASS: music -> home frames: 68
+PASS: music -> timer frames: 73
+PASS: music -> settings frames: 73
+PASS: weather -> home frames: 67
+PASS: weather -> timer frames: 73
+PASS: weather -> settings frames: 68
+PASS: ai -> home frames: 71
+PASS: ai -> timer frames: 73
+PASS: ai -> settings frames: 71
+PASS: custom size {"width":560,"height":500}
+PASS: custom size {"width":900,"height":700}
+PASS: motion off
+--- service-handoff-ui ---
+PASS: in-memory snapshot fades after native detach and late captures are ignored
+--- service-resize-ipc ---
+PASS: trusted service IPC keeps compact state and defers expanded geometry
+--- system-controls ---
+PASS: trusted sender, strict URI/action allowlists, boolean validation, autostart, capture persistence, confirmation cancellation, four fixed power commands; all Windows calls mocked.
+--- transition-frames ---
+collapse frames=47 resizes=24 max-step=29.3
+expand frames=47 resizes=24 max-step=31.4
+interrupt frames=42 resizes=34 max-step=36.1
+open service frames=56 resizes=21 max-step=46.5
+close service frames=52 resizes=15 max-step=53.7
+collapse island frames=49 resizes=25 max-step=29.3
+expand island frames=48 resizes=26 max-step=29.1
+collapse capsule frames=49 resizes=26 max-step=29.1
+expand capsule frames=49 resizes=26 max-step=29.3
+collapse circle frames=49 resizes=26 max-step=37.1
+expand circle frames=49 resizes=26 max-step=37.3
+collapse square frames=49 resizes=26 max-step=29.3
+expand square frames=48 resizes=26 max-step=29.3
+collapse cloud frames=48 resizes=26 max-step=29.3
+expand cloud frames=49 resizes=26 max-step=29.1
+open service custom size frames=46 resizes=19 max-step=46.6
+close service custom size frames=48 resizes=13 max-step=18.5
+PASS: no blank canvas or large geometry jumps; screenshot alpha, service resize ordering and reversal
+--- window-motion ---
+PASS: fade handshake, viewport ownership, stale acknowledgements, show/hide reversal, fallback and quit safety
+
+Also ran tests/motion-endpoint.cjs: 20 phases passed (DPR 1, 1.25, 2), native IPC mocked.

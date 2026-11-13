@@ -1,0 +1,19 @@
+{
+  "version": "0.13.15",
+  "environment": "Linux, headless Chromium and mocked Electron/Windows bridge; real Windows and user accounts were not available",
+  "passed": [
+    "Dashboard: migration of legacy tiles, add/remove, reorder, size, reset, empty state, persistence and all widget routes",
+    "Fourteen blocks with mixed sizes: non-overlapping grid, scrolling and no horizontal overflow at 680 and 390 px",
+    "Weather: opt-in city search, selected city persistence, hourly and current values, empty/offline state, stale-data notice, clear city and no refresh after clearing",
+    "Open-Meteo geocoding and forecast live endpoints and browser flow responded in this environment; UI correctness also tested with deterministic responses",
+    "Player: trusted artwork, artwork glow and reset, player controls, provider switching, five palettes and responsive widths",
+    "Previously existing mocked UI/backend tests for weather, music, Pomodoro, notes, clipboard, displays, system, themes, contour effects, window resizing and transitions",
+    "Visually inspected desktop and narrow home, settings, forecast and artwork states"
+  ],
+  "limitations": [
+    "Electron application, actual music-account login and playback, Yandex website, Windows hardware and desktop interactions were not verified on Windows",
+    "Open-Meteo may be unavailable, change its API, or return a different city; location and coordinates are sent to it after explicit city selection",
+    "No integration with AIMP or Winamp was added; playback abilities depend on existing supported music service adapters",
+    "Miracast discovery and system panels require actual Windows verification"
+  ]
+}

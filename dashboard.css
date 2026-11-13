@@ -1,0 +1,21 @@
+/* Four flexible tracks; controls retain their existing player and service bindings. */
+.home-content .home-grid.dashboard-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;grid-auto-rows:104px;grid-auto-flow:row;align-content:start;align-items:stretch;gap:7px;height:auto;min-height:100%;padding-bottom:4px}
+.home-content .dashboard-grid>.tools{display:contents!important}
+.home-content .dashboard-grid>.card{grid-column:span 2;grid-row:span 3;min-height:320px;overflow:hidden}
+.home-content .dashboard-grid>.card[hidden]{display:none!important}
+.home-content .dashboard-grid>.card[data-size="wide"]{grid-column:span 4}
+.home-content .dashboard-grid .tool{grid-column:span 1;grid-row:span 1;min-height:0;height:auto;overflow:hidden;transition:background .18s ease,border-color .18s ease,transform .18s ease}
+.home-content .dashboard-grid .tool:hover{transform:translateY(-2px)}
+.home-content .dashboard-grid .tool[data-size="wide"]{grid-column:span 2}
+.home-content .dashboard-grid .tool[data-size="large"]{grid-column:span 2;grid-row:span 2}
+.home-content .dashboard-grid .weather-tile[data-quick="weather"]{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:12px;text-align:left;grid-column:span 1;background:linear-gradient(135deg,color-mix(in srgb,var(--accent-p,#b9a5ff) 13%,var(--panel,#19191f)),var(--panel,#19191f));}
+.home-content .dashboard-grid .weather-tile[data-size="wide"],.home-content .dashboard-grid .weather-tile[data-size="large"]{grid-column:span 2}
+.weather-copy{display:flex;flex-direction:column;gap:4px;min-width:0}.weather-copy strong{font-size:13px}.weather-copy #weatherMini{font-size:12px;line-height:1.3;overflow-wrap:anywhere;color:var(--secondary,#d0c8dc)}.weather-copy small{font-size:10px;color:var(--muted-p,#a8a3b6)}
+.dashboard-empty{grid-column:1/-1;color:var(--muted);padding:24px 8px}.dash-editor{display:grid;gap:6px}.dash-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(105px,150px) repeat(3,34px);gap:6px;align-items:center;padding:8px;background:var(--panel,#191820);border:1px solid var(--line-p,#34323d);border-radius:10px}.dash-row strong{font-size:12px;overflow-wrap:anywhere}.dash-row .field{min-width:0;padding:7px;font-size:11px}.dash-row .dash-control{padding:0;min-width:34px;height:34px;font-size:16px}.dash-add{display:flex;gap:6px;margin-top:10px}.dash-add select{min-width:0;flex:1}.dash-add button{white-space:nowrap}
+.home-content .dashboard-grid .music-top{position:relative}.home-content .dashboard-grid .music-top:before{content:'';position:absolute;inset:0;pointer-events:none;border-radius:12px;background:radial-gradient(ellipse at 30% 50%,color-mix(in srgb,var(--accent-p,#b9a5ff) 14%,transparent),transparent 70%),var(--cover-glow,none) center / cover no-repeat;filter:blur(22px);opacity:.16}
+@container tt-island (max-width:520px){.home-content .home-grid.dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:84px}.home-content .dashboard-grid>.card,.home-content .dashboard-grid>.card[data-size="wide"]{grid-column:span 2;grid-row:span 4;min-height:330px}.dash-row{grid-template-columns:minmax(0,1fr) minmax(90px,120px) repeat(3,30px);gap:4px}.dash-row .dash-control{min-width:30px;width:30px}}
+@media(prefers-reduced-motion:reduce){.home-content .dashboard-grid .tool{transition:none}.home-content .dashboard-grid .tool:hover{transform:none}}
+
+/* During a morph the transparent surface can be wider than the target viewport.
+   Never squeeze the contour canvas before the native resize is committed. */
+body.native.island-layout-moving #waveCanvas{max-width:none!important}

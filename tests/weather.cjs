@@ -1,0 +1,17 @@
+// Yandex markup and controller tests. Network is not required.
+const assert=require('node:assert/strict'),fs=require('node:fs'),{EventEmitter}=require('node:events');
+const {chromium}=require('playwright');const {normalizeWeatherURL,createWeatherController}=require('../weather-controller.cjs');
+(async()=>{
+ assert.equal(normalizeWeatherURL('https://yandex.ru/pogoda/ru/moscow?secret=foo#bar'),'https://yandex.ru/pogoda/ru/moscow');
+ assert.equal(normalizeWeatherURL('https://yandex.ru/pogoda/ru?lat=55.7558&lon=37.6173&token=secret'),'https://yandex.ru/pogoda/ru?lat=55.7558&lon=37.6173');assert.equal(normalizeWeatherURL('https://yandex.ru/pogoda/ru?lat=999&lon=37'),'https://yandex.ru/pogoda/ru');
+ for(const u of ['http://yandex.ru/pogoda/','https://yandex.ru.evil.com/pogoda/','https://user@yandex.ru/pogoda/','https://yandex.ru/account','https://evil.com/','bad'])assert.equal(normalizeWeatherURL(u),null,u);
+ const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_PATH||'/usr/local/bin/chromium',args:['--no-sandbox']});const page=await browser.newPage();const reader=fs.readFileSync(require('node:path').join(__dirname,'..','weather-reader.js'),'utf8');
+ await page.setContent('<main><h1>Погода в Москве</h1><article><div class="FactWithoutCharacter_wrap__abc"><p class="AppFactTemperature_content__abc"><span>−</span><span>4</span><span>°</span></p><span class="FactWithoutCharacter_warning__first_text__abc">Снег</span></div></article><div class="forecast"><span class="temp__value">+30°</span></div></main>');
+ let result=await page.evaluate(reader);assert.deepEqual(result,{ok:true,temp:'-4°',cond:'Снег',city:'Москве',source:'Яндекс Погода'});
+ await page.setContent('<div class="FactWithoutCharacter_wrap__x"><p class="AppFactTemperature_content__y">0°</p></div>');result=await page.evaluate(reader);assert.equal(result.temp,'0°');
+ await page.setContent('<div class="forecast"><span class="temp__value">+30°</span></div>');result=await page.evaluate(reader);assert.equal(result.ok,false,'forecast must not become current temp');
+ const wc=new EventEmitter();let urls='https://yandex.ru/pogoda/ru/moscow',loads=0,evals=0,loading=false;Object.assign(wc,{isDestroyed:()=>false,isLoadingMainFrame:()=>loading,getURL:()=>urls,reload:()=>loads++,executeJavaScript:async()=>{evals++;return {ok:true,temp:'+3°',city:'Москва'}}});let active=false;const controller=createWeatherController(()=>({webContents:wc}),()=>active);const oldNow=Date.now;let now=1000;Date.now=()=>now;
+ try{let [a,b]=await Promise.all([controller.snapshot(),controller.snapshot()]);assert.equal(a.temp,'+3°');assert.equal(b.temp,'+3°');assert.equal(evals,1,'coalesce concurrent calls');loading=true;assert.equal((await controller.snapshot()).ok,false);loading=false;urls='https://evil.com/';assert.equal((await controller.snapshot()).ok,false);assert.equal(evals,1);urls='https://yandex.ru/pogoda/ru/moscow';wc.emit('did-fail-load',null,-105,'failed',urls,true);assert.equal((await controller.snapshot()).ok,false);wc.emit('did-finish-load');assert.equal((await controller.snapshot()).ok,true);now+=600001;active=true;assert.equal((await controller.snapshot()).ok,true);assert.equal(loads,0);active=false;assert.equal((await controller.snapshot()).ok,false);assert.equal(loads,1);}
+ finally{Date.now=oldNow;await browser.close()}
+ console.log('PASS: weather current-card parser, errors, trusted URLs, coalescing, hidden-page refresh and active-page protection.');
+})().catch(e=>{console.error(e);process.exit(1)});
