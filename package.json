@@ -1,6 +1,6 @@
 {
   "name": "ttisland",
-  "version": "0.16.3-rc.8",
+  "version": "0.17.0-rc.3",
   "description": "TTIsland desktop companion",
   "main": "main.cjs",
   "author": "TTIsland",
@@ -80,7 +80,10 @@
       "device-ui.js",
       "device-ui.css",
       "apple-player.js",
-      "motion.js"
+      "motion.js",
+      "liquid-fx.js",
+      "liquid-fx.css",
+      "mascot-speed.js"
     ],
     "win": {
       "target": "nsis",

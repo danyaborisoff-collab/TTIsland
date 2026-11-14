@@ -22,3 +22,26 @@
 @keyframes rayTwist{0%,100%{transform:rotate(0)}25%{transform:rotate(8deg)}50%{transform:rotate(-4deg)}}
 @keyframes bloomDance{0%,100%{transform:rotate(-5deg) translateY(0)}50%{transform:rotate(5deg) translateY(-2px)}}
 @keyframes bloomTurn{0%,100%{transform:rotate(0)}50%{transform:rotate(24deg)}}
+
+/* 0.17 mascot polish: soft contact shadow, idle life, blinking eyes and a squash-and-stretch reaction on click.
+   Individual transform properties (scale/translate) are used so the existing per-mascot keyframes keep working. */
+.mascot-sprite{filter:drop-shadow(0 1.5px 1.5px #0008)}
+.mascot-eyes{display:flex;gap:5px;animation:mascotEyesIdle 6.4s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes mascotEyesIdle{0%,18%,100%{translate:0 0;scale:1}24%,40%{translate:1.4px -.4px}46%,62%{translate:-1.4px 0}70%{translate:0 0;scale:1.06 .94}76%{scale:.97 1.04}82%{scale:1}}
+.mascot-birya{animation:mascotBiryaSway 4.8s cubic-bezier(.45,0,.55,1) infinite;transform-origin:50% 90%}
+@keyframes mascotBiryaSway{0%,100%{rotate:0deg;scale:1}25%{rotate:-4deg}50%{scale:1.04 .96}75%{rotate:4deg}}
+.mascot-cat .cat-eye,.mascot-ghost .ghost-eye,.mascot-ray .ray-eye,.mascot-birya .cat-eye{transform-box:fill-box;transform-origin:center;animation:mascotBlink 5.2s infinite}
+.mascot-ghost .ghost-eye{animation-delay:1.3s}.mascot-ray .ray-eye{animation-delay:2.1s}
+@keyframes mascotBlink{0%,45%,51%,100%{scale:1 1}48%{scale:1 .12}}
+.bloom-petals{transform-box:fill-box;transform-origin:center;animation:bloomSpin 9s linear infinite}
+@keyframes bloomSpin{to{rotate:360deg}}
+#pet.mascot-poke{animation:mascotPoke .56s cubic-bezier(.3,1.6,.5,1)!important}
+@keyframes mascotPoke{0%{scale:1}18%{scale:1.22 .74}42%{scale:.86 1.2;translate:0 -4px}68%{scale:1.06 .95;translate:0 0}100%{scale:1}}
+.motion-off #pet.mascot-poke,.motion-off .mascot-eyes,.motion-off .mascot-birya,.motion-off .bloom-petals{animation:none!important}
+@media (prefers-reduced-motion:reduce){body:not([data-motion="full"]) #pet.mascot-poke{animation:none!important}}
+
+/* rc.3: «Глазки» снова минималистичные белые палочки — без зрачков, бликов, румянца и глянца */
+.mascot-life{display:grid;gap:8px;margin-top:12px}
+.mascot-life .living-range{display:flex;align-items:center;gap:10px}
+.mascot-life .living-range input{flex:1}
+.mascot-life .fx-test{justify-self:start;padding:7px 12px;border-radius:10px;border:1px solid #4a4360;background:#221e2e;color:#efeaff;cursor:pointer}

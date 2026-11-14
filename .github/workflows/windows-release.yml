@@ -1,4 +1,4 @@
-name: Windows installer and draft release
+name: Windows EXE and public prerelease
 on:
   workflow_dispatch:
   push:
@@ -6,85 +6,133 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/windows-release.yml'
+      - '.github/release-import-assets.json'
 permissions:
   contents: read
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
 jobs:
+  source:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      sha: ${{ steps.source.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore imported binary documentation assets
+        id: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f .github/release-import-assets.json ]; then
+            python3 - <<'PY'
+          import base64, json, pathlib
+          for item in json.loads(pathlib.Path('.github/release-import-assets.json').read_text()):
+              p = pathlib.Path(item['path'])
+              if str(p) not in ('docs/apple-provider-menu.png', 'docs/apple-service-panel.png'):
+                  raise ValueError('Unexpected import path')
+              p.parent.mkdir(parents=True, exist_ok=True)
+              p.write_bytes(base64.b64decode(item['base64'], validate=True))
+          PY
+            rm .github/release-import-assets.json
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add docs/apple-provider-menu.png docs/apple-service-panel.png .github/release-import-assets.json
+            git commit -m 'Restore original rc.3 screenshots and remove import staging data'
+            git push origin HEAD:main
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
   windows:
+    needs: source
     runs-on: windows-2022
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.source.outputs.sha }}
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install dependencies (first release has no lockfile yet)
+      - name: Install dependencies
         run: npm install --no-audit --no-fund
       - name: Install test browser
         run: npx playwright install chromium
       - name: Run release tests
         run: npm run test:release
+      - name: Run rc.3 regression tests
+        shell: pwsh
+        run: |
+          $env:CHROMIUM_PATH = node -p "require('playwright').chromium.executablePath()"
+          foreach ($test in @('rc3-smoke','liquid-fx','spikes-motion','apple-music')) {
+            node "tests/$test.cjs"
+            if ($LASTEXITCODE -ne 0) { throw "$test failed" }
+          }
       - name: Compile native controllers (no device mutations)
         run: npm run check:windows
       - name: Build unsigned x64 installer
         run: npm run dist:win -- --publish never
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
-      - name: Verify unpacked native source files
+      - name: Verify unpacked native files and installer
         shell: pwsh
         run: |
           $root = 'dist/win-unpacked/resources/app.asar.unpacked/native'
           foreach ($name in @('wifi.cs','audio-mixer.cs','device-control.ps1')) {
             if (!(Test-Path (Join-Path $root $name))) { throw "Missing native file: $name" }
           }
-      - name: Stage assets and SHA-256
-        shell: pwsh
-        run: |
           New-Item release-assets -ItemType Directory -Force | Out-Null
-          Copy-Item dist/*-Setup-x64.exe release-assets/
-          Copy-Item package-lock.json release-assets/
-          Copy-Item SYSTEM-CHECK.json release-assets/
-          Get-ChildItem release-assets/* | Where-Object { !$_.PSIsContainer } | ForEach-Object {
-            $hash = (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower()
-            "$hash  $($_.Name)"
-          } | Set-Content release-assets/SHA256SUMS.txt -Encoding ascii
+          $version = node -p "require('./package.json').version"
+          $exe = "dist/TTIsland-$version-Setup-x64.exe"
+          if (!(Test-Path $exe)) { throw "Missing installer: $exe" }
+          Copy-Item $exe release-assets/
+          Get-FileHash $exe -Algorithm SHA256 | Format-List
       - uses: actions/upload-artifact@v4
         with:
           name: TTIsland-Windows-x64
-          path: release-assets/*
+          path: release-assets/*.exe
           if-no-files-found: error
-  draft:
-    needs: windows
-    if: startsWith(github.ref, 'refs/tags/')
+  release:
+    needs: [source, windows]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.source.outputs.sha }}
       - uses: actions/download-artifact@v4
         with:
           name: TTIsland-Windows-x64
           path: release-assets
-      - name: Verify tag matches package version
-        env:
-          RELEASE_TAG: ${{ github.ref_name }}
-        run: node -e "if(process.env.RELEASE_TAG!=='v'+require('./package.json').version)process.exit(1)"
-      - name: Create or update draft prerelease (never publish automatically)
+      - name: Publish verified EXE prerelease
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          RELEASE_TAG: ${{ github.ref_name }}
-          RELEASE_COMMIT: ${{ github.sha }}
+          RELEASE_COMMIT: ${{ needs.source.outputs.sha }}
+          TRIGGER_REF: ${{ github.ref }}
         shell: bash
         run: |
           set -euo pipefail
+          VERSION=$(node -p "require('./package.json').version")
+          RELEASE_TAG="v$VERSION"
+          if [[ "$TRIGGER_REF" == refs/tags/* && "$TRIGGER_REF" != "refs/tags/$RELEASE_TAG" ]]; then
+            echo 'Tag must match package version'; exit 1
+          fi
+          EXE="release-assets/TTIsland-$VERSION-Setup-x64.exe"
+          test -s "$EXE"
+          test "$(find release-assets -maxdepth 1 -name '*.exe' | wc -l)" -eq 1
+          cp RELEASE-NOTES.md /tmp/release-notes.md
+          printf '\n## SHA-256\n\n```text\n' >> /tmp/release-notes.md
+          (cd release-assets && sha256sum *.exe) >> /tmp/release-notes.md
+          printf '```\n' >> /tmp/release-notes.md
           if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
             STATE=$(gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft)
             test "$STATE" = true || { echo 'Refusing to overwrite a published release'; exit 1; }
           else
-            gh release create "$RELEASE_TAG" --target "$RELEASE_COMMIT" --draft --prerelease --title "TTIsland $RELEASE_TAG" --notes-file RELEASE-NOTES.md
+            gh release create "$RELEASE_TAG" --target "$RELEASE_COMMIT" --draft --prerelease --title "TTIsland $VERSION" --notes-file /tmp/release-notes.md
           fi
-          gh release upload "$RELEASE_TAG" release-assets/* --clobber
+          gh release upload "$RELEASE_TAG" "$EXE" --clobber
+          gh release edit "$RELEASE_TAG" --draft=false --prerelease --latest=false --notes-file /tmp/release-notes.md

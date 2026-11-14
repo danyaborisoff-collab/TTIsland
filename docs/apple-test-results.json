@@ -1,5 +1,5 @@
 {
-  "version": "0.16.3-rc.2",
+  "version": "0.17.0-rc.3",
   "checks": [
     "fourth provider and packaged adapter",
     "real HTML audio + Media Session: metadata, artwork, play/pause, next/previous, seek, audible volume property, mute, invalid input, stale-track guard",

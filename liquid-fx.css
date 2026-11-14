@@ -1,0 +1,15 @@
+/* Liquid FX: full-window layer behind the island (island-wrap has z-index 5). */
+#fxCanvas{position:fixed;left:0;top:0;width:100vw;height:100vh;pointer-events:none;z-index:4;contain:strict}
+.motion-off #fxCanvas,body[data-liquid="false"] #fxCanvas{display:none}
+#liquidFxControls{display:block}
+@media (prefers-reduced-motion:reduce){body:not(.motion-full) #fxCanvas{opacity:.0}}
+
+/* rc.3: docked = island flush with the top line, square top corners, top edge spreads along the screen top (drawn on #fxCanvas) */
+.island-wrap{top:0;transition:top .38s cubic-bezier(.2,1.25,.4,1),width .42s cubic-bezier(.22,1,.36,1)}
+body.fx-docked .island-wrap{top:calc(var(--fx-gap,0px) * -1 * (1 - var(--fx-pull,0) * .6))}
+body.fx-docked #island{border-top-left-radius:0!important;border-top-right-radius:0!important;border-top-color:transparent!important}
+.motion-off .island-wrap{transition:none}
+.fx-config .fx-range{display:flex;align-items:center;gap:10px;margin:10px 0 4px}
+.fx-config .fx-range input{flex:1}
+.fx-config .fx-test{margin-top:8px;padding:7px 12px;border-radius:10px;border:1px solid #4a4360;background:#221e2e;color:#efeaff;cursor:pointer}
+.fx-config .fx-test:hover{background:#2d2740}
