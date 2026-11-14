@@ -13,7 +13,7 @@
 [![Сборка](https://github.com/danyaborisoff-collab/TTIsland/actions/workflows/windows-release.yml/badge.svg)](https://github.com/danyaborisoff-collab/TTIsland/actions/workflows/windows-release.yml)
 [![Лицензия](https://img.shields.io/badge/license-MIT-72bc8f?style=flat-square)](LICENSE)
 
-**[Скачать установщик](https://github.com/danyaborisoff-collab/TTIsland/releases/tag/v0.17.0-rc.3)** · **[Возможности](#возможности)** · **[Запуск из исходников](#запуск-из-исходников)** · **[Что нового](#что-нового-в-0170-rc3)**
+**[Скачать EXE · 0.17.0-rc.3](https://github.com/danyaborisoff-collab/TTIsland/releases/download/v0.17.0-rc.3/TTIsland-0.17.0-rc.3-Setup-x64.exe)** · **[Возможности](#возможности)** · **[Запуск из исходников](#запуск-из-исходников)** · **[Что нового](#что-нового-в-0170-rc3)**
 
 <img src="docs/images/overview-dark.svg" width="760" alt="Тёмный интерфейс TTIsland: музыкальный плеер, погода и быстрые инструменты" />
 
@@ -21,7 +21,7 @@
 
 </div>
 
-> **Текущая версия: 0.17.0-rc.3 — предварительный выпуск для Windows x64.** Сборка и публикация выполняются в [GitHub Actions](https://github.com/danyaborisoff-collab/TTIsland/actions/workflows/windows-release.yml). После успешных проверок установщик появится в [Releases](https://github.com/danyaborisoff-collab/TTIsland/releases/tag/v0.17.0-rc.3). Это неподписанный установщик; проверка на реальном Windows-ПК по-прежнему нужна.
+> **Релиз 0.17.0-rc.3 опубликован — Windows 10/11 x64.** [Скачать EXE](https://github.com/danyaborisoff-collab/TTIsland/releases/download/v0.17.0-rc.3/TTIsland-0.17.0-rc.3-Setup-x64.exe) · [Описание и SHA-256](https://github.com/danyaborisoff-collab/TTIsland/releases/tag/v0.17.0-rc.3) · [Успешная Windows-сборка](https://github.com/danyaborisoff-collab/TTIsland/actions/runs/43546390649). Версия предварительная, установщик неподписанный; проверка на реальном Windows-ПК по-прежнему нужна.
 
 ---
 
@@ -145,7 +145,7 @@
 
 ### Готовый установщик Windows x64
 
-1. Открой **[релиз 0.17.0-rc.3](https://github.com/danyaborisoff-collab/TTIsland/releases/tag/v0.17.0-rc.3)** после завершения [сборки](https://github.com/danyaborisoff-collab/TTIsland/actions/workflows/windows-release.yml).
+1. Открой **[релиз 0.17.0-rc.3](https://github.com/danyaborisoff-collab/TTIsland/releases/tag/v0.17.0-rc.3)**. Windows-сборка и автоматические проверки [успешно завершены](https://github.com/danyaborisoff-collab/TTIsland/actions/runs/43546390649).
 2. В разделе **Assets** скачай **[`TTIsland-0.17.0-rc.3-Setup-x64.exe`](https://github.com/danyaborisoff-collab/TTIsland/releases/download/v0.17.0-rc.3/TTIsland-0.17.0-rc.3-Setup-x64.exe)**.
 3. Полностью выйди из старой версии через трей и запусти установщик. Node.js для установки не нужен.
 
